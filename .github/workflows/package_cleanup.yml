@@ -1,0 +1,20 @@
+name: Package cleanup
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 23 * * 2'
+
+permissions:
+  packages: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete old java containers
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: sif-baseimages/java
+          package-type: container
+          min-versions-to-keep: 10
+          delete-only-untagged-versions: true
