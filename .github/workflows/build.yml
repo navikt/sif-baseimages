@@ -43,14 +43,18 @@ jobs:
 
       - name: Extract timesttamp
         id: timestamp
-        run: echo "TIMESTAMP=$(date -u +'%Y%m%d%H%MZ')" >> $GITHUB_ENV
+        run: |
+          echo "TIMESTAMP=$(date -u +'%Y%m%d%H%MZ')" >> $GITHUB_ENV
+          echo "DATE_HOUR=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: java
           platforms: linux/amd64,linux/arm64
-          build-args: BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
+          build-args: |
+            BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
+            CACHEBUST=${{ env.DATE_HOUR }}
           pull: true
           push: ${{ github.ref_name == 'master' }}
           tags: |

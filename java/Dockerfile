@@ -1,5 +1,6 @@
 FROM eclipse-temurin:21.0.6_7-jre-alpine-3.21
 LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage-java
+ARG CACHEBUST=1
 RUN apk update \
     && apk upgrade \
     && apk add --no-cache dumb-init musl-locales \
