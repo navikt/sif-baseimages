@@ -38,7 +38,7 @@ jobs:
         with:
           docker_context: java
           dockerfile: java/Dockerfile
-          image_suffix: java
+          image_suffix: /java
           build-args: |
             BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
             CACHEBUST=${{ env.DATE_HOUR }}
