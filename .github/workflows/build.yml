@@ -44,8 +44,6 @@ jobs:
           push-image: ${{ github.ref_name == github.event.repository.default_branch}}
           additional-tag: ${{matrix.version}}
           secrets: inherit
-
-        
   #trivy-java21:
   #  needs: [build-java]
   #  permissions:
