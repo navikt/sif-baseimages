@@ -43,7 +43,7 @@ jobs:
 
       - name: Extract timesttamp
         id: timestamp
-        run: echo "TIMESTAMP=${date -u +"%Y-%m-%d_%H"} >> $GITHUB_ENV
+        run: echo "TIMESTAMP=$(date -u +'%Y-%m-%d_%H')" >> $GITHUB_ENV
 
       - name: Build and push
         uses: docker/build-push-action@v6
