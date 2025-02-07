@@ -41,7 +41,7 @@ jobs:
           build-args: |
             BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
             CACHEBUST=${{ env.DATE_HOUR }}
-          build-version: ${{matrix.version}}-${{ env.TIMESTAMP }}
+          build-version: java:${{matrix.version}}-${{ env.TIMESTAMP }}
           push-image: ${{ github.ref_name == github.event.repository.default_branch}}
-          additional-tag: ${{matrix.version}}
+          additional-tag: java:${{matrix.version}}
           secrets: inherit
