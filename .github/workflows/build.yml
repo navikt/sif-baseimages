@@ -45,19 +45,3 @@ jobs:
           push-image: ${{ github.ref_name == github.event.repository.default_branch}}
           additional-tag: ${{matrix.version}}
           secrets: inherit
-  #trivy-java21:
-  #  needs: [build-java]
-  #  permissions:
-  #    actions: read
-  #    contents: read
-  #    security-events: write
-  #  strategy:
-  #    matrix:
-  #      version: [ '21', '23' ]
-  #  name: Trivy
-  #  uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
-  #  with:
-  #    image: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
-  #    team: k9saksbehandling
-  #  secrets: inherit
-  #
