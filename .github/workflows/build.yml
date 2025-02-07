@@ -34,7 +34,6 @@ jobs:
           echo "DATE_HOUR=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
       - name: Bygg og push docker image
         id: docker-build
-        if: inputs.build-image
         uses: navikt/sif-gha-workflows/.github/actions/maven/build-push-docker-image@main # ratchet:exclude
         with:
           docker_context: java
