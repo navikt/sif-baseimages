@@ -1,11 +1,11 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: "/java/java-23.Dockerfile"
+    directory: "/java/23"
     schedule:
       interval: daily
   - package-ecosystem: docker
-    directory: "/java/java-21.Dockerfile"
+    directory: "/java/21"
     schedule:
       interval: daily
     ignore:
