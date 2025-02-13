@@ -1,12 +1,16 @@
 version: 2
 updates:
   - package-ecosystem: docker
-    directory: "/java/"
+    directory: "/java/java-23.Dockerfile"
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
+    directory: "/java/java-21.Dockerfile"
     schedule:
       interval: daily
     ignore:
-      - dependency-name: "*"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: "eclipse-temurin"
+        version: ">= 22, >= 21-jre, < 21-jrf"
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
