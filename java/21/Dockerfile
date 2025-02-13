@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.6_7-jre-alpine-3.20
+FROM eclipse-temurin:21-jre-alpine-3.21
 LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage-java
 ARG CACHEBUST=1
 RUN apk update \
