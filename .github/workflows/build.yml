@@ -30,7 +30,7 @@ jobs:
       - name: Extract timesttamp
         id: timestamp
         run: |
-          echo "TIMESTAMP=$(date -u +'%Y%m%d%H%MZ')" >> $GITHUB_ENV
+          echo "TIMESTAMP=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_ENV
           echo "DATE_HOUR=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
       - name: Bygg og push docker image
         id: docker-build
@@ -38,11 +38,10 @@ jobs:
         with:
           docker_context: java
           dockerfile: java/Dockerfile
-          image_suffix: /java
+          image_suffix: /java-${{matrix.version}}
           build-args: |
             BASE_IMAGE=eclipse-temurin:${{matrix.version}}-jre-alpine
             CACHEBUST=${{ env.DATE_HOUR }}
-          build-version: ${{matrix.version}}-${{ env.TIMESTAMP }}
+          build-version: ${{ env.TIMESTAMP }}
           push-image: ${{ github.ref_name == github.event.repository.default_branch}}
-          additional-tag: ${{matrix.version}}
           secrets: inherit
