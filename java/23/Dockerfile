@@ -23,6 +23,7 @@ ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
 COPY ../scripts /
 
 WORKDIR /app
+RUN chown -R apprunner /app
 USER apprunner
 EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--", "/entrypoint.sh"]
