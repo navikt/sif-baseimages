@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Build and push
 
 on:
   push:
@@ -60,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: java
-          file: java/java-${{matrix.version}}.Dockerfile
+          file: java/${{matrix.version}}/Dockerfile
           build-args: |
             CACHEBUST=${{ env.DATE_HOUR }}
           platforms: linux/amd64,linux/arm64
