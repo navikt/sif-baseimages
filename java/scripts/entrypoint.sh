@@ -12,5 +12,6 @@ else
 fi
 
 set -x
+set +u
 exec java ${DEFAULT_JVM_OPTS} ${JAVA_OPTS} -jar app.jar ${RUNTIME_OPTS} $@
 
