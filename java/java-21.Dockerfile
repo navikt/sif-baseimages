@@ -20,7 +20,7 @@ ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
                       -Djava.security.egd=file:/dev/urandom \
                       -Duser.timezone=Europe/Oslo"
 #init-scripts
-COPY ../scripts /
+COPY scripts /
 
 WORKDIR /app
 USER apprunner
