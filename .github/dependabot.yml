@@ -10,7 +10,7 @@ updates:
       interval: daily
     ignore:
       - dependency-name: "eclipse-temurin"
-        versions: [">=22", "21-jre-alpine-x"]
+        versions: [">=22"]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
