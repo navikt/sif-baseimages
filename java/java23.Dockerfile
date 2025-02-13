@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.6_7-jre-alpine-3.21
+FROM eclipse-temurin:23.0.2_7-jre-alpine-3.21
 LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage-java
 ARG CACHEBUST=1
 RUN apk update \
@@ -20,7 +20,7 @@ ENV DEFAULT_JVM_OPTS="-XX:+PrintCommandLineFlags \
                       -Djava.security.egd=file:/dev/urandom \
                       -Duser.timezone=Europe/Oslo"
 #init-scripts
-COPY scripts/ /
+COPY ../scripts /
 
 WORKDIR /app
 USER apprunner
