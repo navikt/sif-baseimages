@@ -10,8 +10,6 @@ on:
       - '.gitignore'
       - 'LICENCE'
       - 'CODEOWNERS'
-  schedule:
-    - cron: '23 23 * * 2'
   workflow_dispatch:
 
 jobs:
@@ -52,7 +50,6 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
           tags: |
-            # Create build-version tag if it is not set:
             type=raw,value=${{ env.TIMESTAMP }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
