@@ -8,10 +8,10 @@ on:
       - '**.md'
       - '**.MD'
       - '.gitignore'
-      - 'LICENCE'
+      - 'LICENSE'
       - 'CODEOWNERS'
-  workflow_dispatch:
-
+      - '.github/**'
+    workflow_dispatch:
 jobs:
   build-java:
     permissions:
