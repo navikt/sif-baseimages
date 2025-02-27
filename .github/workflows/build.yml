@@ -73,7 +73,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '23' ] #TODO legg inn 21 når klar
+        version: [ '21', '23' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
