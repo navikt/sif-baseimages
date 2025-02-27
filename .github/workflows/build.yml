@@ -76,8 +76,6 @@ jobs:
         version: [ '23' ] #TODO legg inn 21 når klar
     runs-on: ubuntu-latest
     steps:
-      - env:
-          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
       - name: Checkout latest code
         uses: actions/checkout@v4
       - name: Set up QEMU
@@ -93,6 +91,8 @@ jobs:
       - name: Docker meta
         uses: docker/metadata-action@v5
         id: meta
+        env:
+          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
         with:
           images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
           tags: |
@@ -101,6 +101,8 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
         uses: docker/build-push-action@v6
+        env:
+          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
         with:
           context: java
           file: java/${{matrix.version}}/Dockerfile
