@@ -1,6 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: docker
+    directory: "/java/base"
+    schedule:
+      interval: daily
+  - package-ecosystem: docker
     directory: "/java/23"
     schedule:
       interval: daily
