@@ -19,6 +19,7 @@ jobs:
       contents: read
       packages: write
       id-token: write
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v4
