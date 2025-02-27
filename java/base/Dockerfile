@@ -1,5 +1,5 @@
 FROM alpine:3.21.2
-LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage-javaready
+LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage/java-base
 ARG CACHEBUST=1
 RUN apk update \
     && apk upgrade \
