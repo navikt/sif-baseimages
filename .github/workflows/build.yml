@@ -76,12 +76,6 @@ jobs:
         version: [ '21', '23' ]
     runs-on: ubuntu-latest
     steps:
-      - name: Output timestamp
-        env:
-          timestamp: ${{needs.build_java_base.outputs.timestamp}}
-        run : |
-          echo "envtimestamp ${{ env.timestamp }}
-          echo "timestamp ${{needs.build_java_base.outputs.timestamp}}
       - name: Checkout latest code
         uses: actions/checkout@v4
       - name: Set up QEMU
