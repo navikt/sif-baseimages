@@ -15,13 +15,13 @@ on:
 jobs:
 
   build-java-base:
-    outputs:
-      buildversion: ${{ steps.timestamp.outputs.TIMESTAMP }}
     permissions:
       contents: read
       packages: write
       id-token: write
     runs-on: ubuntu-latest
+    outputs:
+      timestamp: ${{ steps.timestamp.outputs.timestamp }}
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v4
@@ -38,8 +38,8 @@ jobs:
       - name: Extract timesttamp
         id: timestamp
         run: |
-          echo "TIMESTAMP=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_ENV
-          echo "DATE_HOUR=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
+          echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_ENV
+          echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
       - name: Docker meta
         uses: docker/metadata-action@v5
         id: meta
@@ -47,7 +47,7 @@ jobs:
           images: ghcr.io/${{ github.repository }}/java-base
           tags: |
             # Create build-version tag if it is not set:
-            type=raw,value=${{ env.TIMESTAMP }},priority=255
+            type=raw,value=${{ env.timestamp }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
@@ -56,7 +56,7 @@ jobs:
           context: java
           file: java/base/Dockerfile
           build-args: |
-            CACHEBUST=${{ env.DATE_HOUR }}
+            CACHEBUST=${{ env.date_hour }}
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.ref_name == github.event.repository.default_branch}}
@@ -76,6 +76,12 @@ jobs:
         version: [ '21', '23' ]
     runs-on: ubuntu-latest
     steps:
+      - name: Output timestamp
+        env:
+          timestamp: ${{needs.build-java-base.outputs.timestamp}}
+        run : |
+          echo "envtimestamp ${{ env.timestamp }}
+          echo "timestamp $timestamp
       - name: Checkout latest code
         uses: actions/checkout@v4
       - name: Set up QEMU
@@ -92,22 +98,22 @@ jobs:
         uses: docker/metadata-action@v5
         id: meta
         env:
-          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
+          timestamp: ${{needs.build-java-base.outputs.timestamp}}
         with:
           images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
           tags: |
-            type=raw,value=${{ env.BUILD_VERSION }},priority=255
+            type=raw,value=${{ env.timestamp }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
         uses: docker/build-push-action@v6
         env:
-          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
+          timestamp: ${{needs.build-java-base.outputs.timestamp}}
         with:
           context: java
           file: java/${{matrix.version}}/Dockerfile
           build-args: |
-            BASE_IMAGE_VERSION=${{ env.BUILD_VERSION }}
+            BASE_IMAGE_VERSION=${{ env.timestamp }}
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.ref_name == github.event.repository.default_branch}}
