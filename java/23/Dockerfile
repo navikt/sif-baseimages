@@ -13,3 +13,4 @@ LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimages/j
 COPY --from=builder /builder/javaruntime /opt/java/openjdk
 
 
+

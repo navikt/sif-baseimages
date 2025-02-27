@@ -41,6 +41,7 @@ jobs:
           echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_ENV
           echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
           echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
+          echo "timestamp=$timestamp"
       - name: Docker meta
         uses: docker/metadata-action@v5
         id: meta
