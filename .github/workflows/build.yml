@@ -15,6 +15,8 @@ on:
 jobs:
 
   build-java-base:
+    outputs:
+      buildversion: ${{ steps.timestamp.outputs.TIMESTAMP }}
     permissions:
       contents: read
       packages: write
@@ -74,6 +76,8 @@ jobs:
         version: [ '23' ] #TODO legg inn 21 når klar
     runs-on: ubuntu-latest
     steps:
+      - env:
+          BUILD_VERSION: ${{needs.build-java-base.outputs.buildversion}}
       - name: Checkout latest code
         uses: actions/checkout@v4
       - name: Set up QEMU
@@ -92,7 +96,7 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
           tags: |
-            type=raw,value=${{ env.TIMESTAMP }},priority=255
+            type=raw,value=${{ env.BUILD_VERSION }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
@@ -101,7 +105,7 @@ jobs:
           context: java
           file: java/${{matrix.version}}/Dockerfile
           build-args: |
-            BASE_IMAGE_VERSION=${{ env.TIMESTAMP }}  # spesifikk versjon av base er kun tilgjengelig i main-branch, siden kun der det publiseres
+            BASE_IMAGE_VERSION=${{ env.BUILD_VERSION }}  # spesifikk versjon av base er kun tilgjengelig i main-branch, siden kun der det publiseres
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.ref_name == github.event.repository.default_branch}}
