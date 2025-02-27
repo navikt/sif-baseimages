@@ -38,10 +38,8 @@ jobs:
       - name: Extract timesttamp
         id: timestamp
         run: |
-          echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_ENV
+          echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_OUTPUT
           echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
-          echo "timestamp=$timestamp" >> $GITHUB_OUTPUT
-          echo "timestamp=$timestamp"
       - name: Docker meta
         uses: docker/metadata-action@v5
         id: meta
@@ -49,7 +47,7 @@ jobs:
           images: ghcr.io/${{ github.repository }}/java-base
           tags: |
             # Create build-version tag if it is not set:
-            type=raw,value=${{ env.timestamp }},priority=255
+            type=raw,value=${{ steps.timestamp.outputs.timestamp }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
@@ -83,7 +81,7 @@ jobs:
           timestamp: ${{needs.build_java_base.outputs.timestamp}}
         run : |
           echo "envtimestamp ${{ env.timestamp }}
-          echo "timestamp $timestamp
+          echo "timestamp ${{needs.build_java_base.outputs.timestamp}}
       - name: Checkout latest code
         uses: actions/checkout@v4
       - name: Set up QEMU
