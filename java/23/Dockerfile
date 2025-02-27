@@ -8,6 +8,7 @@ RUN jlink --add-modules java.base,java.compiler,java.datatransfer,java.desktop,j
 ARG BASE_IMAGE_VERSION
 FROM ghcr.io/navikt/sif-baseimages/javaready:${BASE_IMAGE_VERSION:-"latest"}
 
+
 LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimages/java-23
 
 COPY --from=builder /builder/javaruntime /opt/java/openjdk
