@@ -14,7 +14,7 @@ on:
     workflow_dispatch:
 jobs:
 
-  build-java-base:
+  build_java_base:
     permissions:
       contents: read
       packages: write
@@ -65,8 +65,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  build-java:
-    needs: build-java-base
+  build_java:
+    needs: build_java_base
     permissions:
       contents: read
       packages: write
@@ -78,7 +78,7 @@ jobs:
     steps:
       - name: Output timestamp
         env:
-          timestamp: ${{needs.build-java-base.outputs.timestamp}}
+          timestamp: ${{needs.build_java_base.outputs.timestamp}}
         run : |
           echo "envtimestamp ${{ env.timestamp }}
           echo "timestamp $timestamp
@@ -98,7 +98,7 @@ jobs:
         uses: docker/metadata-action@v5
         id: meta
         env:
-          timestamp: ${{needs.build-java-base.outputs.timestamp}}
+          timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
           images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
           tags: |
@@ -108,7 +108,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         env:
-          timestamp: ${{needs.build-java-base.outputs.timestamp}}
+          timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
           context: java
           file: java/${{matrix.version}}/Dockerfile
