@@ -107,7 +107,7 @@ jobs:
           context: java
           file: java/${{matrix.version}}/Dockerfile
           build-args: |
-            BASE_IMAGE_VERSION=${{ env.BUILD_VERSION }}  # spesifikk versjon av base er kun tilgjengelig i main-branch, siden kun der det publiseres
+            BASE_IMAGE_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.ref_name == github.event.repository.default_branch}}
