@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: docker
-    directory: "/java/23"
+    directory: "/java/24"
     schedule:
       interval: daily
   - package-ecosystem: docker
