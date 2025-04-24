@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_VERSION
-FROM eclipse-temurin:21.0.6_7-jdk-alpine AS builder
+FROM eclipse-temurin:21.0.7_6-jdk-alpine AS builder
 WORKDIR /builder
 #bygg egen java runtime, tar her med alle moduler som er med i jre-bygget for eclipse temurin. Disse kan finnes ved å kjøre 'java --list-modules' et sted man har jre-bygget
 #et alternativ til å bygge med jlink, er å ha avhengighet til eclipse-temurin<versjon>-jre-alpine, og kopiere /opt/java/openjdk derfra. Fordelen med jlink er at vi kan fjerne moduler vi ikke trenger, og mulighet til å justere argumenter compress.
