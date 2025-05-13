@@ -73,7 +73,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '24' ]
+        version: [ '11', '21', '24' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code

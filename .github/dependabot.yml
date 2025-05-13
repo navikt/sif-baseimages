@@ -15,6 +15,13 @@ updates:
     ignore:
       - dependency-name: "eclipse-temurin"
         versions: [">=22"]
+  - package-ecosystem: docker
+    directory: "/java/11"
+    schedule:
+      interval: daily
+    ignore:
+      - dependency-name: "eclipse-temurin"
+        versions: [ ">=12" ]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
