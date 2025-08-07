@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_VERSION
-FROM eclipse-temurin:24.0.1_9-jdk-alpine AS builder
+FROM eclipse-temurin:24.0.2_12-jdk-alpine AS builder
 WORKDIR /builder
 #bygg egen java runtime, tar her med alle moduler som er med i jre-bygget for eclipse temurin. Disse kan finnes ved å kjøre 'java --list-modules' et sted man har jre-bygget
 # har tatt bort jdk.incubator.vector, da vi normalt ikke bruker incubator-features
