@@ -73,7 +73,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '24', '25', 'chainguard-21', 'chainguard-24', 'chainguard-25' ]
+        version: [ '21', '25', 'chainguard-21', 'chainguard-25' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
