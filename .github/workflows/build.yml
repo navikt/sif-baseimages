@@ -11,7 +11,7 @@ on:
       - 'LICENSE'
       - 'CODEOWNERS'
       - '.github/**'
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
 
   build_java_base:
