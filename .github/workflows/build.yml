@@ -88,7 +88,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: nais/login@v0
+      - name: Login to Nais
+        uses: nais/login@v0
         with:
           team: k9saksbehandling
       - name: Docker meta
