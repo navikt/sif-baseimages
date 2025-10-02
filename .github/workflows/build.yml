@@ -11,7 +11,7 @@ on:
       - 'LICENSE'
       - 'CODEOWNERS'
       - '.github/**'
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
 
   build_java_base:
@@ -73,7 +73,7 @@ jobs:
       id-token: write
     strategy:
       matrix:
-        version: [ '21', '24' ]
+        version: [ '21', '25', 'chainguard-21', 'chainguard-25' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -88,6 +88,10 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to Nais
+        uses: nais/login@v0
+        with:
+          team: k9saksbehandling
       - name: Docker meta
         uses: docker/metadata-action@v5
         id: meta
