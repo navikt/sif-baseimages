@@ -1,4 +1,4 @@
-FROM alpine:3.22.1
+FROM alpine:3.22.2
 LABEL org.opencontainers.image.source=https://github.com/navikt/sif-baseimage/java-base
 ARG CACHEBUST=1
 RUN apk update \
