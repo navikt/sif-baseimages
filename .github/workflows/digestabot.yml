@@ -15,7 +15,7 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v6
-      - uses: navikt/digestabot@02239a769317fa91352c5715b851f2c41708f71e
+      - uses: navikt/digestabot@6c419f9c92ce6a841d25d44e1f91ae8d371ecdd3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           team: k9saksbehandling
