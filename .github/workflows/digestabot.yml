@@ -7,7 +7,7 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  digest-update:
+  digest-update-chainguard-21:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -19,3 +19,18 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           team: k9saksbehandling
+          working-dir: "/java/chainguard-21"
+
+  digest-update-chainguard-25:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: navikt/digestabot@e4b413f1eed3c97f7fd4ffa1d05204de9944d0a9
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          team: k9saksbehandling
+          working-dir: "/java/chainguard-25"
