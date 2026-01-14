@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # At the end of every day
-    - cron: "0 0 * * *"
+    - cron: "40 7 * * *"
 
 jobs:
   digest-update-chainguard-21:
@@ -19,7 +19,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           team: k9saksbehandling
-          working-dir: "/java/chainguard-21"
+          working-dir: "java/chainguard-21"
 
   digest-update-chainguard-25:
     runs-on: ubuntu-latest
@@ -33,4 +33,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           team: k9saksbehandling
-          working-dir: "/java/chainguard-25"
+          working-dir: "java/chainguard-25"
