@@ -26,11 +26,11 @@ jobs:
       - name: Checkout latest code
         uses: actions/checkout@v6
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,7 +41,7 @@ jobs:
           echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_OUTPUT
           echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
       - name: Docker meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         id: meta
         with:
           images: ghcr.io/${{ github.repository }}/java-base
@@ -51,7 +51,7 @@ jobs:
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: java
           file: java/base/Dockerfile
@@ -79,11 +79,11 @@ jobs:
       - name: Checkout latest code
         uses: actions/checkout@v6
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        uses: docker/login-action@b45d80f862d83dbcd57f89517bcf500b2ab88fb2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -93,7 +93,7 @@ jobs:
         with:
           team: k9saksbehandling
       - name: Docker meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         id: meta
         env:
           timestamp: ${{needs.build_java_base.outputs.timestamp}}
@@ -104,7 +104,7 @@ jobs:
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         env:
           timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
