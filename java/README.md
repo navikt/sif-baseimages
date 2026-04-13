@@ -1,4 +1,4 @@
-Foreldrepenger Java baseimage
+SiF Java baseimage
 =====================
 
 Basic Usage
@@ -6,7 +6,7 @@ Basic Usage
 
 Create a `Dockerfile` containing:
 ```Dockerfile
-FROM ghcr.io/navikt/sif-baseimages/java:21
+FROM ghcr.io/navikt/sif-baseimages/java:25
 
 LABEL org.opencontainers.image.source=https://github.com/navikt/k9-sak
 
@@ -23,7 +23,7 @@ The simplest way of running your app is to create a far jar and copy it into you
 Since the default working directory is `/app`, there's no need to specify the path.
 
 ```Dockerfile
-FROM ghcr.io/navikt/sif-baseimages/java:21
+FROM ghcr.io/navikt/sif-baseimages/java:25
 COPY target/my-awesome.jar app.jar
 ```
 
