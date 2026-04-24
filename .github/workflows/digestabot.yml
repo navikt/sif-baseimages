@@ -7,23 +7,6 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  digest-update-chainguard-21:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - uses: navikt/digestabot@6c419f9c92ce6a841d25d44e1f91ae8d371ecdd3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          team: k9saksbehandling
-          working-dir: "java/chainguard-21"
-          branch-for-pr: "update-chainguard-21-image"
-          title-for-pr: "Update Chainguard 21 image"
 
   digest-update-chainguard-25:
     runs-on: ubuntu-latest
