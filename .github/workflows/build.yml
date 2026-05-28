@@ -51,7 +51,7 @@ jobs:
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
-        uses: docker/build-push-action@v7.1.0
+        uses: docker/build-push-action@v7.2.0
         with:
           context: java
           file: java/base/Dockerfile
@@ -104,7 +104,7 @@ jobs:
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
-        uses: docker/build-push-action@v7.1.0
+        uses: docker/build-push-action@v7.2.0
         env:
           timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
