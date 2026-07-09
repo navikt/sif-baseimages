@@ -28,9 +28,9 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4.2.0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.1.0
+        uses: docker/setup-buildx-action@v4.2.0
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee
+        uses: docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -41,7 +41,7 @@ jobs:
           echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_OUTPUT
           echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
       - name: Docker meta
-        uses: docker/metadata-action@v6.1.0
+        uses: docker/metadata-action@v6.2.0
         id: meta
         with:
           images: ghcr.io/${{ github.repository }}/java-base
@@ -81,9 +81,9 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v4.2.0
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.1.0
+        uses: docker/setup-buildx-action@v4.2.0
       - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee
+        uses: docker/login-action@c99871dec2022cc055c062a10cc1a1310835ceb4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -93,7 +93,7 @@ jobs:
         with:
           team: k9saksbehandling
       - name: Docker meta
-        uses: docker/metadata-action@v6.1.0
+        uses: docker/metadata-action@v6.2.0
         id: meta
         env:
           timestamp: ${{needs.build_java_base.outputs.timestamp}}
