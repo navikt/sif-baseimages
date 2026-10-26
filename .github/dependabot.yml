@@ -21,6 +21,9 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
+    ignore:
+      - dependency-name: "eclipse-temurin"
+        versions: [ ">=27" ]
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
