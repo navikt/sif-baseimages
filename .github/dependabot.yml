@@ -6,6 +6,7 @@ updates:
       interval: daily
     cooldown:
       default-days: 7
+
   - package-ecosystem: docker
     directory: "/java/25"
     schedule:
@@ -15,6 +16,7 @@ updates:
     ignore:
       - dependency-name: "eclipse-temurin"
         versions: [ ">=26" ]
+
   - package-ecosystem: docker
     directory: "/java/26"
     schedule:
@@ -24,6 +26,7 @@ updates:
     ignore:
       - dependency-name: "eclipse-temurin"
         versions: [ ">=27" ]
+
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
