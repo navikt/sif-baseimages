@@ -17,10 +17,10 @@ jobs:
       security-events: write
     strategy:
       matrix:
-        version: [ '25', '26' ]
+        version: [ 'chainguard-25' ]
     name: Trivy
     uses: navikt/sif-gha-workflows/.github/workflows/trivy.yml@main
     with:
-      image: ghcr.io/${{ github.repository }}/java:${{matrix.version}}
+      image: ghcr.io/${{ github.repository }}/java-${{ matrix.version }}:latest
       team: k9saksbehandling
     secrets: inherit
