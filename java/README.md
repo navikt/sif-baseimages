@@ -1,6 +1,6 @@
 # Java-baseimage (Chainguard)
 
-`ghcr.io/navikt/sif-baseimages/java-chainguard-25` bygger på Navs Chainguard-JRE (`cgr-nav/.../jre:openjdk-25`). Imaget har ikke shell, init-skript eller entrypoint-skript. JVM-en kjører som PID 1.
+`ghcr.io/navikt/sif-baseimages/java-chainguard-25` bygger på Navs Chainguard-JRE (`cgr-nav/.../jre:openjdk-25`). Imaget har ikke shell, og JVM-en kjører som PID 1.
 
 ## Bruk
 
@@ -16,11 +16,12 @@ Imaget starter med `java -jar app.jar` fra arbeidsmappen. Bruk en tidsstempel-ta
 
 ## JVM-opsjoner
 
-Imaget setter `JDK_JAVA_OPTIONS` med standardvalg (minne, GC, tidssone og språk). Ikke overstyr `JDK_JAVA_OPTIONS` i Nais-manifestet. Legg ekstra opsjoner i `JAVA_TOOL_OPTIONS`. JVM-en leser begge.
+Imaget setter `JDK_JAVA_OPTIONS` med standardvalg (minne, GC, tidssone og språk). Ikke overstyr den i Nais-manifestet. Legg ekstra opsjoner i `JAVA_TOOL_OPTIONS`. JVM-en leser begge.
 
-## Webproxy i FSS
+Eksempler på opsjoner i `JAVA_TOOL_OPTIONS`:
 
-Init-skriptet som satte proxy finnes ikke lenger. Apper med `webproxy: true` må sette proxy selv:
+- Webproxy i FSS (apper med `webproxy: true`): `$(JAVA_PROXY_OPTIONS)`
+- Remote debug: `-agentlib:jdwp=...`
 
 ```yaml
 env:
@@ -28,20 +29,11 @@ env:
     value: $(JAVA_PROXY_OPTIONS)
 ```
 
-## Erstatning for de gamle init-skriptene
-
-- **Vault-filer** (`/var/run/secrets/nais.io/vault/*.env`) blir ikke lenger lest inn som miljøvariabler. Sett verdiene i manifestet, eller les filene fra appen.
-- **Truststore:** Trenger appen Navs truststore, legg `-Djavax.net.ssl.trustStore=$(NAV_TRUSTSTORE_PATH) -Djavax.net.ssl.trustStorePassword=$(NAV_TRUSTSTORE_PASSWORD)` i `JAVA_TOOL_OPTIONS`.
-- **Azure-filer:** Nais setter `AZURE_*` som miljøvariabler, så filene trenger ikke leses inn.
-- **Remote debug:** Legg `-agentlib:jdwp=...` i `JAVA_TOOL_OPTIONS` ved behov.
-
 ## Oppdatering
 
-`FROM` i hver Dockerfile er låst til en digest. Workflowen `.github/workflows/digestabot.yml` bruker [Navs digestabot](https://sikkerhet.nav.no/docs/verktoy/chainguard-dockerimages#digestabot) og kjører hver natt kl. 00:00 UTC, og kan også startes manuelt. Den logger inn i `cgr-nav`-registryet som teamet og sjekker om taggen (for eksempel `jre:openjdk-25`) har fått ny digest. I så fall lager den en PR med ny digest på branchen `update-chainguard-25-image`.
+`FROM` er låst til en digest. [Navs digestabot](https://sikkerhet.nav.no/docs/verktoy/chainguard-dockerimages#digestabot) (`.github/workflows/digestabot.yml`) sjekker hver natt om taggen har fått ny digest, og lager i så fall en PR. Når PR-en er merget, bygger `build.yml` et nytt image med ny tidsstempel-tag. Appene må selv bumpe taggen.
 
-Når PR-en er merget, bygger `build.yml` et nytt image med ny tidsstempel-tag. Appene må deretter bumpe taggen sin selv.
-
-Dependabot kan ikke brukes for Chainguard-images. Den ser bare etter nyere tagger og ville byttet til en ny Java-versjon. Selve digestabot-actionen er låst til en SHA og oppdateres av Dependabot for github-actions.
+Dependabot brukes ikke for Chainguard-images, fordi den ville byttet til en ny Java-versjon.
 
 ## Ny Java-versjon
 
