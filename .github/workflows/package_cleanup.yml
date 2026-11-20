@@ -14,7 +14,7 @@ jobs:
       - name: Delete old java containers
         uses: actions/delete-package-versions@v5
         with:
-          package-name: sif-baseimages/java
+          package-name: sif-baseimages/java-chainguard-25
           package-type: container
           min-versions-to-keep: 10
           delete-only-untagged-versions: true

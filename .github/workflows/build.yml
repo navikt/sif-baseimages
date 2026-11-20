@@ -14,66 +14,14 @@ on:
   workflow_dispatch:
 jobs:
 
-  build_java_base:
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    runs-on: ubuntu-latest
-    outputs:
-      timestamp: ${{ steps.timestamp.outputs.timestamp }}
-    steps:
-      - name: Checkout latest code
-        uses: actions/checkout@v7.0.1
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v4.4.0
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4.4.1
-      - name: Login to GitHub Packages Docker Registry
-        uses: docker/login-action@8aa5831fb8d48d8f76594c7ddde61ae58019f550
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Extract timesttamp
-        id: timestamp
-        run: |
-          echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> $GITHUB_OUTPUT
-          echo "date_hour=$(date -u +'%Y%m%d%HZ')" >> $GITHUB_ENV
-      - name: Docker meta
-        uses: docker/metadata-action@v6.2.0
-        id: meta
-        with:
-          images: ghcr.io/${{ github.repository }}/java-base
-          tags: |
-            # Create build-version tag if it is not set:
-            type=raw,value=${{ steps.timestamp.outputs.timestamp }},priority=255
-            # set latest tag for default branch (master)
-            type=raw,value=latest,enable={{is_default_branch}}
-      - name: Build and push
-        uses: docker/build-push-action@v7.4.0
-        with:
-          context: java
-          file: java/base/Dockerfile
-          build-args: |
-            CACHEBUST=${{ env.date_hour }}
-          platforms: linux/amd64,linux/arm64
-          pull: true
-          push: ${{ github.ref_name == github.event.repository.default_branch}}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
   build_java:
-    needs: build_java_base
     permissions:
       contents: read
       packages: write
       id-token: write
     strategy:
       matrix:
-        version: [ '25', '26', 'chainguard-25' ]
+        version: [ 'chainguard-25' ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout latest code
@@ -92,33 +40,30 @@ jobs:
         uses: nais/login@v0
         with:
           team: k9saksbehandling
+      - name: Extract timestamp
+        id: timestamp
+        run: echo "timestamp=$(date -u +'%Y.%m.%d.%H%MZ')" >> "$GITHUB_OUTPUT"
       - name: Docker meta
         uses: docker/metadata-action@v6.2.0
         id: meta
-        env:
-          timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
-          images: ghcr.io/${{ github.repository }}/java-${{matrix.version}}
+          images: ghcr.io/${{ github.repository }}/java-${{ matrix.version }}
           tags: |
-            type=raw,value=${{ env.timestamp }},priority=255
+            type=raw,value=${{ steps.timestamp.outputs.timestamp }},priority=255
             # set latest tag for default branch (master)
             type=raw,value=latest,enable={{is_default_branch}}
       - name: Build and push
         uses: docker/build-push-action@v7.4.0
-        env:
-          timestamp: ${{needs.build_java_base.outputs.timestamp}}
         with:
           context: java
-          file: java/${{matrix.version}}/Dockerfile
-          build-args: |
-            BASE_IMAGE_VERSION=${{ github.ref_name == github.event.repository.default_branch && env.timestamp || 'latest' }}
+          file: java/${{ matrix.version }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           pull: true
           push: ${{ github.ref_name == github.event.repository.default_branch}}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=${{ matrix.version }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.version }}
 
   sif-code-scan:
     runs-on: ubuntu-latest
