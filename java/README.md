@@ -48,4 +48,4 @@ Dependabot kan ikke brukes for Chainguard-images. Den ser bare etter nyere tagge
 1. Kopier `java/chainguard-25` til for eksempel `java/chainguard-26`, og bytt taggen i `FROM` til `jre:openjdk-26` med digest.
 2. Legg `'chainguard-26'` til i matrisen i `.github/workflows/build.yml`. Imaget blir `java-chainguard-26`.
 3. Kopier jobben `digest-update-chainguard-25` i `digestabot.yml`, og bytt `working-dir` og `branch-for-pr`.
-4. Legg imaget til i `trivy.yml` og `package_cleanup.yml`.
+4. Legg versjonen til i matrisene i `trivy.yml` og `package_cleanup.yml`.
