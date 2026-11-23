@@ -1,1 +1,3 @@
-Bygg på master pusher image til Github Container Registry (ghcr) - se releases
+# sif-baseimages
+
+Java-baseimage for team k9saksbehandling, bygd på Navs Chainguard-JRE. Bygg på master pusher `ghcr.io/navikt/sif-baseimages/java-chainguard-25` til GitHub Container Registry. Se [java/README.md](java/README.md) for bruk.

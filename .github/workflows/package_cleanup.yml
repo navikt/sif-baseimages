@@ -10,11 +10,14 @@ permissions:
 jobs:
   cleanup:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [ 'chainguard-25' ]
     steps:
       - name: Delete old java containers
         uses: actions/delete-package-versions@v5
         with:
-          package-name: sif-baseimages/java
+          package-name: sif-baseimages/java-${{ matrix.version }}
           package-type: container
           min-versions-to-keep: 10
           delete-only-untagged-versions: true
